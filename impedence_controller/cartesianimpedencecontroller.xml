@@ -1,0 +1,7 @@
+<library path="impedence_controller">
+    <class name="impedence_controller/ImpedenceController" type="impedence_controller::ImpedenceController" base_class_type="controller_interface::ControllerInterface">
+      <description>
+        Simple cartesian impedence controller
+      </description>
+    </class>
+  </library>
