@@ -16,6 +16,7 @@ find_package(rclcpp_lifecycle REQUIRED)
 find_package(Eigen3 REQUIRED)
 find_package(pinocchio REQUIRED)
 find_package(realtime_tools REQUIRED)
+find_package(get_parameter_library REQUIRED)
 # uncomment the following section in order to fill in
 # further dependencies manually.
 # find_package(<dependency> REQUIRED)
@@ -30,6 +31,7 @@ set( ament_dependencies
   tf2_eigen # for some reason pinocchio cant find eigen without this package also being included
   pinocchio
   realtime_tools
+  generate_parameter_library
 )
 
 

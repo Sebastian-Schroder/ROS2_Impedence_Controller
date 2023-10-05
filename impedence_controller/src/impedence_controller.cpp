@@ -2,6 +2,7 @@
 #include "impedence_controller/impedence_controller.hpp"
 #include "impedence_controller/visability_control.h"
 #include "pinocchio/parsers/urdf.hpp"
+
 //TODO https://github.com/ros-controls/ros2_controllers/blob/master/doc/writing_new_controller.rst
 using namespace std::chrono_literals;
 namespace pin = pinocchio;
@@ -21,8 +22,9 @@ ImpedenceController::ImpedenceController(/* args */)
         }
         RCLCPP_INFO(get_node()->get_logger(),"wating for /robot_state_publisher");
     }
+    std::vector<std::string> params;
+    auto test = this->dataPtr->parameter_client->get_parameters(params,50ms);
     
- 
     
 
     
@@ -46,14 +48,28 @@ ImpedenceController::~ImpedenceController()
             RCLCPP_ERROR(get_node()->get_logger(),"During ros2_control interface configuration, degrees of freedom [%u] is not valid;",dof);
             rclcpp::shutdown();
         }
-        // conf.names.reserve(dof*)
+        std::string prefix;
 
+        conf.names.push_back(prefix+"/position");
+        conf.names.push_back(prefix+"/orientation");
+
+        return(conf);
 
     }
 
     controller_interface::InterfaceConfiguration ImpedenceController::state_interface_configuration() const {
         controller_interface::InterfaceConfiguration conf;
         conf.type = controller_interface::interface_configuration_type::INDIVIDUAL;
+        std::string prefix;
+
+        conf.names.push_back(prefix+"/position");
+        conf.names.push_back(prefix+"/orientation");
+        conf.names.push_back(prefix+"/position_d");
+        conf.names.push_back(prefix+"/orientation_d");
+
+        return(conf);
+
+
     }
 
 
@@ -78,7 +94,9 @@ ImpedenceController::~ImpedenceController()
 
 
 
-    controller_interface::CallbackReturn ImpedenceController::on_init(){
+    controller_interface::CallbackReturn ImpedenceController::on_init()
+    {
+        // ControllerInterface::init();
         auto parameters = this->dataPtr->parameter_client->get_parameters({ "robot_description" });
         std::string urdf_string;
         for (auto& parameter : parameters)
@@ -104,7 +122,9 @@ ImpedenceController::~ImpedenceController()
         
     }
 
-    controller_interface::CallbackReturn ImpedenceController::on_activate(const rclcpp_lifecycle::State & previous_state){}
+    controller_interface::CallbackReturn ImpedenceController::on_activate(const rclcpp_lifecycle::State & previous_state){
+        return(CallbackReturn::SUCCESS);
+    }
 
 
 

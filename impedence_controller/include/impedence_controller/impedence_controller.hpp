@@ -20,7 +20,10 @@
 #include "rclcpp_lifecycle/node_interfaces/lifecycle_node_interface.hpp"
 #include "rclcpp_lifecycle/state.hpp"
 #include "lifecycle_msgs/msg/state.hpp"
+
 #include <std_msgs/msg/float64_multi_array.hpp>
+
+
 #include <realtime_tools/realtime_publisher.h>
 #include <realtime_tools/realtime_buffer.h>
 #include <realtime_tools/realtime_server_goal_handle.h>
@@ -52,7 +55,7 @@ struct ImpedenceControllerParameters{
     std::vector<std::string> command_joints = {};
     std::vector<std::string> command_interfaces = {};
     std::vector<std::string> state_interfaces = {};
-
+    
 };
 
 class ImpedenceController: public controller_interface::ControllerInterface
